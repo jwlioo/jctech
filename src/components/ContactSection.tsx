@@ -47,22 +47,32 @@ export function ContactSection() {
               </Button>
             </div>
           </div>
-          <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-4" onSubmit={(e) => {
+            e.preventDefault();
+            const form = e.currentTarget;
+            const name = (form.elements.namedItem("name") as HTMLInputElement).value.trim();
+            const email = (form.elements.namedItem("email") as HTMLInputElement).value.trim();
+            const phone = (form.elements.namedItem("phone") as HTMLInputElement).value.trim();
+            const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value.trim();
+            if (!name || !message) return;
+            const text = `Olá! Meu nome é *${name}*%0A${email ? `Email: ${email}%0A` : ""}${phone ? `Tel: ${phone}%0A` : ""}%0A${encodeURIComponent(message)}`;
+            window.open(`https://wa.me/5511956865680?text=${text}`, "_blank");
+          }}>
             <div>
               <label htmlFor="name" className="text-sm text-muted-foreground mb-1 block">Nome</label>
-              <input id="name" type="text" placeholder="Seu nome" className="w-full h-11 px-4 rounded-lg bg-input border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary" />
+              <input id="name" name="name" type="text" required placeholder="Seu nome" className="w-full h-11 px-4 rounded-lg bg-input border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary" />
             </div>
             <div>
               <label htmlFor="email" className="text-sm text-muted-foreground mb-1 block">Email</label>
-              <input id="email" type="email" placeholder="seu@email.com" className="w-full h-11 px-4 rounded-lg bg-input border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary" />
+              <input id="email" name="email" type="email" placeholder="seu@email.com" className="w-full h-11 px-4 rounded-lg bg-input border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary" />
             </div>
             <div>
               <label htmlFor="phone" className="text-sm text-muted-foreground mb-1 block">Telefone</label>
-              <input id="phone" type="tel" placeholder="(00) 00000-0000" className="w-full h-11 px-4 rounded-lg bg-input border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary" />
+              <input id="phone" name="phone" type="tel" placeholder="(00) 00000-0000" className="w-full h-11 px-4 rounded-lg bg-input border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary" />
             </div>
             <div>
               <label htmlFor="message" className="text-sm text-muted-foreground mb-1 block">Mensagem</label>
-              <textarea id="message" rows={4} placeholder="Como podemos ajudar?" className="w-full px-4 py-3 rounded-lg bg-input border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary resize-none" />
+              <textarea id="message" name="message" rows={4} required placeholder="Como podemos ajudar?" className="w-full px-4 py-3 rounded-lg bg-input border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary resize-none" />
             </div>
             <Button variant="hero" size="lg" className="w-full" type="submit">
               Enviar Mensagem
