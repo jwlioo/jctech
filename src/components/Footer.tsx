@@ -32,7 +32,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2 text-muted-foreground">
                 <MapPin className="w-4 h-4 text-primary" />
-                São Paulo - SP
+                Sorocaba - SP
               </li>
             </ul>
           </div>
