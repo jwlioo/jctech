@@ -1,0 +1,53 @@
+import { Instagram, Mail, MapPin, Phone } from "lucide-react";
+
+export function Footer() {
+  return (
+    <footer className="border-t border-border py-12 px-4">
+      <div className="max-w-6xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div>
+            <h3 className="text-xl font-bold text-gradient mb-3">JC Tech</h3>
+            <p className="text-muted-foreground text-sm leading-relaxed">
+              Soluções em Tecnologia da Informação
+            </p>
+          </div>
+          <div>
+            <h4 className="font-semibold text-foreground mb-3">Links Rápidos</h4>
+            <ul className="space-y-2 text-sm">
+              <li><a href="#solucoes" className="text-muted-foreground hover:text-primary transition-colors">Soluções</a></li>
+              <li><a href="#processo" className="text-muted-foreground hover:text-primary transition-colors">Como Funciona</a></li>
+              <li><a href="#contato" className="text-muted-foreground hover:text-primary transition-colors">Contato</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold text-foreground mb-3">Contato</h4>
+            <ul className="space-y-2 text-sm">
+              <li className="flex items-center gap-2 text-muted-foreground">
+                <Phone className="w-4 h-4 text-primary" />
+                (15) 99645-3463
+              </li>
+              <li className="flex items-center gap-2 text-muted-foreground">
+                <Mail className="w-4 h-4 text-primary" />
+                contato@vitextecnologia.com.br
+              </li>
+              <li className="flex items-center gap-2 text-muted-foreground">
+                <MapPin className="w-4 h-4 text-primary" />
+                Porto Feliz - São Paulo
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold text-foreground mb-3">Redes Sociais</h4>
+            <a href="https://instagram.com/vitex.tecnologia" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm">
+              <Instagram className="w-4 h-4" />
+              @vitex.tecnologia
+            </a>
+          </div>
+        </div>
+        <div className="border-t border-border mt-8 pt-8 text-center text-sm text-muted-foreground">
+          © {new Date().getFullYear()} JC Tech. Todos os direitos reservados.
+        </div>
+      </div>
+    </footer>
+  );
+}
