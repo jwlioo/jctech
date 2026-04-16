@@ -40,6 +40,11 @@ export const Route = createRootRoute({
     ],
     links: [
       {
+        rel: "icon",
+        type: "image/png",
+        href: "/src/assets/jdctech.png",
+      },
+      {
         rel: "stylesheet",
         href: appCss,
       },

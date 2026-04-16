@@ -2,6 +2,14 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "tanstack-start-app",
   "compatibility_date": "2025-09-24",
-  "compatibility_flags": ["nodejs_compat"],
-  "main": "@tanstack/react-start/server-entry",
+  "env": {
+    "production": {
+      "routes": [
+        {
+          "pattern": "https://jctech.vercel.app/*",
+          "zone_name": "jctech.dev"
+        }
+      ]
+    }
+  }
 }
