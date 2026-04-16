@@ -21,7 +21,7 @@ export function Header() {
             </a>
           ))}
           <a
-            href="https://wa.me/5515996453463"
+            href="https://wa.me/5511956865680"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center h-9 px-4 rounded-md bg-primary text-primary-foreground text-sm font-medium shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:scale-105 transition-all duration-300"
@@ -45,7 +45,7 @@ export function Header() {
             </a>
           ))}
           <a
-            href="https://wa.me/5515996453463"
+            href="https://wa.me/5511956865680"
             target="_blank"
             rel="noopener noreferrer"
             className="block text-sm text-primary font-medium"
