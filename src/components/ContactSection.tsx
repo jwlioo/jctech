@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Phone, Mail, Clock } from "lucide-react";
 
 const contactInfo = [
-  { icon: Phone, label: "WhatsApp", value: "(15) 99645-3463", href: "https://wa.me/5515996453463" },
-  { icon: Mail, label: "Email", value: "contato@vitextecnologia.com.br", href: "mailto:contato@vitextecnologia.com.br" },
+  { icon: Phone, label: "WhatsApp", value: "(11) 95686-5680", href: "https://wa.me/5511956865680" },
+  { icon: Mail, label: "Email", value: "julio.botacciohightechx@gmail.com", href: "mailto:julio.botacciohightechx@gmail.com" },
   { icon: Clock, label: "Horário", value: "Seg-Sex: 9h às 18h", href: undefined },
 ];
 
@@ -41,7 +41,7 @@ export function ContactSection() {
             ))}
             <div className="mt-6">
               <Button variant="hero" size="lg" className="w-full" asChild>
-                <a href="https://wa.me/5515996453463" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/5511956865680" target="_blank" rel="noopener noreferrer">
                   Falar no WhatsApp
                 </a>
               </Button>

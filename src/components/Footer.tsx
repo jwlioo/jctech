@@ -24,28 +24,29 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li className="flex items-center gap-2 text-muted-foreground">
                 <Phone className="w-4 h-4 text-primary" />
-                (15) 99645-3463
+                (11) 95686-5680
               </li>
               <li className="flex items-center gap-2 text-muted-foreground">
                 <Mail className="w-4 h-4 text-primary" />
-                contato@vitextecnologia.com.br
+                julio.botacciohightechx@gmail.com
               </li>
               <li className="flex items-center gap-2 text-muted-foreground">
                 <MapPin className="w-4 h-4 text-primary" />
-                Porto Feliz - São Paulo
+                São Paulo - SP
               </li>
             </ul>
           </div>
           <div>
             <h4 className="font-semibold text-foreground mb-3">Redes Sociais</h4>
-            <a href="https://instagram.com/vitex.tecnologia" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm">
+            <a href="https://instagram.com/Jctech.tecnologia" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm">
               <Instagram className="w-4 h-4" />
-              @vitex.tecnologia
+              @Jctech.tecnologia
             </a>
           </div>
         </div>
         <div className="border-t border-border mt-8 pt-8 text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} JC Tech. Todos os direitos reservados.
+          <p>© {new Date().getFullYear()} JC Tech. Todos os direitos reservados.</p>
+          <p className="mt-1">CNPJ: 64.274.680/0001-14</p>
         </div>
       </div>
     </footer>
