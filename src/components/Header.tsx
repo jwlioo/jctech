@@ -9,30 +9,12 @@ const navLinks = [
 
 const HEADER_OFFSET = 80;
 
-function smoothScrollTo(targetY: number, duration = 800) {
-  const startY = window.scrollY;
-  const diff = targetY - startY;
-  if (Math.abs(diff) < 2) return;
-
+function smoothScrollTo(targetY: number) {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduceMotion) {
-    window.scrollTo(0, targetY);
-    return;
-  }
-
-  let start: number | null = null;
-  // easeInOutCubic
-  const ease = (t: number) =>
-    t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-  const step = (timestamp: number) => {
-    if (start === null) start = timestamp;
-    const elapsed = timestamp - start;
-    const progress = Math.min(elapsed / duration, 1);
-    window.scrollTo(0, startY + diff * ease(progress));
-    if (progress < 1) requestAnimationFrame(step);
-  };
-  requestAnimationFrame(step);
+  window.scrollTo({
+    top: targetY,
+    behavior: reduceMotion ? "auto" : "smooth",
+  });
 }
 
 export function Header() {
@@ -45,14 +27,17 @@ export function Header() {
     e.preventDefault();
     setOpen(false);
     const top = el.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET;
-    smoothScrollTo(top, 800);
+    smoothScrollTo(top);
     history.replaceState(null, "", href);
   };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/50">
       <div className="max-w-6xl mx-auto flex items-center justify-between h-16 px-4">
-        <a href="/" className="text-xl font-bold text-gradient">JC Tech</a>
+        <a href="/" className="flex items-center gap-2">
+          <img src="/jctech-logo.png" alt="JC Tech" className="h-8 w-8 object-contain" />
+          <span className="text-xl font-bold text-gradient">JC Tech</span>
+        </a>
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((l) => (
             <a
