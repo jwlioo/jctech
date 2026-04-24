@@ -39,13 +39,6 @@ export function ContactSection() {
                 </div>
               </div>
             ))}
-            <div className="mt-6">
-              <Button variant="hero" size="lg" className="w-full" asChild>
-                <a href="https://wa.me/5511956865680" target="_blank" rel="noopener noreferrer">
-                  Falar no WhatsApp
-                </a>
-              </Button>
-            </div>
           </div>
           <form className="space-y-4" onSubmit={(e) => {
             e.preventDefault();
