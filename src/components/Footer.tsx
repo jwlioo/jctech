@@ -6,10 +6,7 @@ export function Footer() {
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <div className="flex items-center gap-2 mb-3">
-              <img src="/jctech-logo.png" alt="JC Tech" className="h-8 w-8 object-contain" />
-              <h3 className="text-xl font-bold text-gradient">JC Tech</h3>
-            </div>
+            <h3 className="text-xl font-bold text-gradient mb-3">JC Tech</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
               Soluções em Tecnologia da Informação
             </p>
