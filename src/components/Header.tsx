@@ -7,8 +7,47 @@ const navLinks = [
   { label: "Contato", href: "#contato" },
 ];
 
+const HEADER_OFFSET = 80;
+
+function smoothScrollTo(targetY: number, duration = 800) {
+  const startY = window.scrollY;
+  const diff = targetY - startY;
+  if (Math.abs(diff) < 2) return;
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion) {
+    window.scrollTo(0, targetY);
+    return;
+  }
+
+  let start: number | null = null;
+  // easeInOutCubic
+  const ease = (t: number) =>
+    t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  const step = (timestamp: number) => {
+    if (start === null) start = timestamp;
+    const elapsed = timestamp - start;
+    const progress = Math.min(elapsed / duration, 1);
+    window.scrollTo(0, startY + diff * ease(progress));
+    if (progress < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
 export function Header() {
   const [open, setOpen] = useState(false);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (!href.startsWith("#")) return;
+    const el = document.querySelector(href);
+    if (!el) return;
+    e.preventDefault();
+    setOpen(false);
+    const top = el.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET;
+    smoothScrollTo(top, 800);
+    history.replaceState(null, "", href);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/50">
@@ -16,7 +55,12 @@ export function Header() {
         <a href="/" className="text-xl font-bold text-gradient">JC Tech</a>
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((l) => (
-            <a key={l.href} href={l.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            <a
+              key={l.href}
+              href={l.href}
+              onClick={(e) => handleNavClick(e, l.href)}
+              className="text-sm text-muted-foreground hover:text-primary transition-colors"
+            >
               {l.label}
             </a>
           ))}
@@ -37,10 +81,19 @@ export function Header() {
           {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
-      {open && (
-        <nav className="md:hidden glass border-t border-border/50 px-4 py-4 space-y-3">
+      <div
+        className={`md:hidden overflow-hidden transition-[max-height,opacity] duration-300 ease-out ${
+          open ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <nav className="glass border-t border-border/50 px-4 py-4 space-y-3">
           {navLinks.map((l) => (
-            <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+            <a
+              key={l.href}
+              href={l.href}
+              onClick={(e) => handleNavClick(e, l.href)}
+              className="block text-sm text-muted-foreground hover:text-primary transition-colors"
+            >
               {l.label}
             </a>
           ))}
@@ -53,7 +106,7 @@ export function Header() {
             Fale Conosco
           </a>
         </nav>
-      )}
+      </div>
     </header>
   );
 }
