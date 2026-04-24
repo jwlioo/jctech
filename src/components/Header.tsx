@@ -34,10 +34,7 @@ export function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/50">
       <div className="max-w-6xl mx-auto flex items-center justify-between h-16 px-4">
-        <a href="/" className="flex items-center gap-2">
-          <img src="/jctech-logo.png" alt="JC Tech" className="h-8 w-8 object-contain" />
-          <span className="text-xl font-bold text-gradient">JC Tech</span>
-        </a>
+        <a href="/" className="text-xl font-bold text-gradient">JC Tech</a>
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((l) => (
             <a
