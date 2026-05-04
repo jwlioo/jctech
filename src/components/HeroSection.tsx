@@ -1,42 +1,91 @@
 import { Button } from "@/components/ui/button";
-import heroBg from "@/assets/hero-bg.jpg";
 import { Brain } from "lucide-react";
+import type { DetailedHTMLProps, HTMLAttributes } from "react";
+
+type ModelViewerProps = DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> & {
+  src?: string;
+  alt?: string;
+  "auto-rotate"?: boolean | string;
+  "camera-controls"?: boolean | string;
+  "shadow-intensity"?: string;
+  exposure?: string;
+  "interaction-prompt"?: string;
+  loading?: string;
+  reveal?: string;
+};
+
+declare module "react" {
+  namespace JSX {
+    interface IntrinsicElements {
+      "model-viewer": ModelViewerProps;
+    }
+  }
+}
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <img
-        src={heroBg}
-        alt="Fundo tecnológico com redes neurais"
-        width={1920}
-        height={1080}
-        className="absolute inset-0 w-full h-full object-cover opacity-40"
+    <section className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Tech gradient background */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_color-mix(in_oklch,var(--color-primary)_18%,transparent),transparent_60%),radial-gradient(ellipse_at_bottom_left,_color-mix(in_oklch,var(--color-chart-3)_18%,transparent),transparent_60%)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background" />
+      <div
+        className="absolute inset-0 opacity-[0.07]"
+        style={{
+          backgroundImage:
+            "linear-gradient(var(--color-primary) 1px, transparent 1px), linear-gradient(90deg, var(--color-primary) 1px, transparent 1px)",
+          backgroundSize: "48px 48px",
+        }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background" />
-      <div className="relative z-10 max-w-4xl mx-auto text-center px-4 py-32">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glow-border glass text-sm text-primary mb-8">
-          <Brain className="w-4 h-4" />
-          <span>Especialistas em Inteligência Artificial</span>
+
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 py-24 md:py-32 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+        {/* Text */}
+        <div className="text-center lg:text-left">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glow-border glass text-sm text-primary mb-8">
+            <Brain className="w-4 h-4" />
+            <span>Especialistas em Inteligência Artificial</span>
+          </div>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-foreground leading-tight">
+            <span className="text-gradient">JC Tech</span>
+            <br />
+            <span className="text-2xl sm:text-3xl md:text-4xl font-medium text-muted-foreground mt-2 block">
+              Soluções inteligentes que transformam negócios através do poder da IA
+            </span>
+          </h1>
+          <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto lg:mx-0">
+            Automações, chatbots, atendimento inteligente e muito mais para sua empresa crescer.
+          </p>
+          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <Button variant="hero" size="lg" asChild>
+              <a href="https://wa.me/5515996453463" target="_blank" rel="noopener noreferrer">
+                Começar Agora
+              </a>
+            </Button>
+            <Button variant="heroOutline" size="lg" asChild>
+              <a href="#solucoes">Conhecer Soluções</a>
+            </Button>
+          </div>
         </div>
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-tight">
-          <span className="text-gradient">JC Tech</span>
-          <br />
-          <span className="text-2xl sm:text-3xl md:text-4xl font-medium text-muted-foreground mt-2 block">
-            Soluções inteligentes que transformam negócios através do poder da IA
-          </span>
-        </h1>
-        <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
-          Automações, chatbots, atendimento inteligente e muito mais para sua empresa crescer.
-        </p>
-        <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-          <Button variant="hero" size="lg" asChild>
-            <a href="https://wa.me/5515996453463" target="_blank" rel="noopener noreferrer">
-              Começar Agora
-            </a>
-          </Button>
-          <Button variant="heroOutline" size="lg" asChild>
-            <a href="#solucoes">Conhecer Soluções</a>
-          </Button>
+
+        {/* 3D Model */}
+        <div className="relative w-full aspect-square max-w-[520px] mx-auto">
+          <div className="absolute inset-0 rounded-3xl glow-box glow-border glass" />
+          <model-viewer
+            src="/models/robot_playground.glb"
+            alt="Modelo 3D interativo - JC Tech"
+            auto-rotate
+            camera-controls
+            shadow-intensity="1"
+            exposure="1"
+            interaction-prompt="none"
+            loading="lazy"
+            reveal="auto"
+            style={{
+              width: "100%",
+              height: "100%",
+              backgroundColor: "transparent",
+              borderRadius: "1.5rem",
+            }}
+          />
         </div>
       </div>
     </section>
