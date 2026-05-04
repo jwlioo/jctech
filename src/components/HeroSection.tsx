@@ -82,8 +82,6 @@ export function HeroSection() {
           <div className="absolute inset-0 rounded-3xl glow-box glow-border glass" />
           <ClientOnly fallback={<div className="absolute inset-0 rounded-3xl animate-pulse bg-card/40" />}>
             <ModelViewerLoader />
-            </ClientOnly>
-          <ClientOnly fallback={null}>
             <model-viewer
               src={robotModel}
               alt="Modelo 3D interativo - JC Tech"
