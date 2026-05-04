@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Brain } from "lucide-react";
 import { ClientOnly } from "@tanstack/react-router";
 import type { DetailedHTMLProps, HTMLAttributes } from "react";
+import robotModel from "@/assets/robot_playground.glb?url";
 
 type ModelViewerProps = DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> & {
   src?: string;
