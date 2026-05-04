@@ -70,23 +70,25 @@ export function HeroSection() {
         {/* 3D Model */}
         <div className="relative w-full aspect-square max-w-[520px] mx-auto">
           <div className="absolute inset-0 rounded-3xl glow-box glow-border glass" />
-          <model-viewer
-            src="/models/robot_playground.glb"
-            alt="Modelo 3D interativo - JC Tech"
-            auto-rotate
-            camera-controls
-            shadow-intensity="1"
-            exposure="1"
-            interaction-prompt="none"
-            loading="lazy"
-            reveal="auto"
-            style={{
-              width: "100%",
-              height: "100%",
-              backgroundColor: "transparent",
-              borderRadius: "1.5rem",
-            }}
-          />
+          <ClientOnly fallback={<div className="absolute inset-0 rounded-3xl animate-pulse bg-card/40" />}>
+            <model-viewer
+              src="/models/robot_playground.glb"
+              alt="Modelo 3D interativo - JC Tech"
+              auto-rotate
+              camera-controls
+              shadow-intensity="1"
+              exposure="1"
+              interaction-prompt="none"
+              loading="lazy"
+              reveal="auto"
+              style={{
+                width: "100%",
+                height: "100%",
+                backgroundColor: "transparent",
+                borderRadius: "1.5rem",
+              }}
+            />
+          </ClientOnly>
         </div>
       </div>
     </section>
