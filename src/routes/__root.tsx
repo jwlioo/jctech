@@ -49,6 +49,12 @@ export const Route = createRootRoute({
         href: appCss,
       },
     ],
+    scripts: [
+      {
+        type: "module",
+        src: "https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js",
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
