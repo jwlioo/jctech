@@ -1,8 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Brain } from "lucide-react";
 import { ClientOnly } from "@tanstack/react-router";
+import { useEffect } from "react";
 import type { DetailedHTMLProps, HTMLAttributes } from "react";
+
 const robotModel = "/robot_playground.glb";
+
+function ModelViewerLoader() {
+  useEffect(() => {
+    import("@google/model-viewer");
+  }, []);
+  return null;
+}
 
 type ModelViewerProps = DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> & {
   src?: string;
