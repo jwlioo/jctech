@@ -4,7 +4,7 @@ import { ClientOnly } from "@tanstack/react-router";
 import { useEffect } from "react";
 import type { DetailedHTMLProps, HTMLAttributes } from "react";
 
-const robotModel = "/robot_playground.glb";
+const robotModel = "https://modelviewer.dev/shared-assets/models/RobotExpressive.glb";
 
 function ModelViewerLoader() {
   useEffect(() => {
