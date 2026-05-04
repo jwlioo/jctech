@@ -2,24 +2,22 @@ import { Button } from "@/components/ui/button";
 import { Brain } from "lucide-react";
 import type { DetailedHTMLProps, HTMLAttributes } from "react";
 
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
+type ModelViewerProps = DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> & {
+  src?: string;
+  alt?: string;
+  "auto-rotate"?: boolean | string;
+  "camera-controls"?: boolean | string;
+  "shadow-intensity"?: string;
+  exposure?: string;
+  "interaction-prompt"?: string;
+  loading?: string;
+  reveal?: string;
+};
+
+declare module "react" {
   namespace JSX {
     interface IntrinsicElements {
-      "model-viewer": DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> & {
-        src?: string;
-        alt?: string;
-        "auto-rotate"?: boolean | string;
-        "camera-controls"?: boolean | string;
-        "shadow-intensity"?: string;
-        exposure?: string;
-        "rotation-per-second"?: string;
-        "interaction-prompt"?: string;
-        "disable-zoom"?: boolean | string;
-        ar?: boolean | string;
-        loading?: string;
-        reveal?: string;
-      };
+      "model-viewer": ModelViewerProps;
     }
   }
 }
