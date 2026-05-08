@@ -23,6 +23,8 @@ type ModelViewerProps = DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLEleme
   "interaction-prompt"?: string;
   loading?: string;
   reveal?: string;
+  autoplay?: boolean | string;
+  "animation-name"?: string;
 };
 
 declare module "react" {
