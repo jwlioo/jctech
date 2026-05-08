@@ -85,6 +85,7 @@ export function HeroSection() {
             <model-viewer
               src={robotModel}
               alt="Modelo 3D interativo - JC Tech"
+              autoplay
               auto-rotate
               camera-controls
               shadow-intensity="1"
