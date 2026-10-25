@@ -3,7 +3,7 @@ import { Lightbulb, Handshake, Target, Award } from "lucide-react";
 const values = [
   { icon: Lightbulb, title: "Inovação", desc: "Tecnologia de ponta aplicada aos seus desafios" },
   { icon: Handshake, title: "Parceria", desc: "Trabalhamos lado a lado com nossos clientes" },
-  { icon: Target, title: "Resultados", desc: "Foco em impacto mensurável e ROI comprovado" },
+  { icon: Target, title: "Resultados", desc: "Foco no que faz diferença na sua operação" },
   { icon: Award, title: "Excelência", desc: "Qualidade premium em cada entrega" },
 ];
 
@@ -14,7 +14,7 @@ export function AboutSection() {
         <div className="text-center mb-16">
           <span className="text-primary text-sm font-semibold tracking-widest uppercase">Sobre Nós</span>
           <h2 className="text-3xl md:text-4xl font-bold mt-3 text-foreground">
-            Tecnologia Acessível para Todos os Negócios
+            Gente que entende de tecnologia. E de gente.
           </h2>
           <p className="text-muted-foreground mt-4 max-w-3xl mx-auto leading-relaxed">
             Transforme a forma como sua empresa se comunica com clientes e organiza seus processos. 

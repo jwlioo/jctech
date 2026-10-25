@@ -14,18 +14,15 @@ export function AIFirstSection() {
       <div className="max-w-6xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
-            <span className="text-primary text-sm font-semibold tracking-widest uppercase">AI First</span>
+            <span className="text-primary text-sm font-semibold tracking-widest uppercase">Inteligência aplicada</span>
             <h2 className="text-3xl md:text-4xl font-bold mt-3 text-foreground">
-              A Nova Era dos Negócios Já Começou
+              Sua equipe cuida das pessoas. A tecnologia cuida do resto.
             </h2>
             <p className="text-muted-foreground mt-4 leading-relaxed">
-              Na JC Tech, acreditamos que empresas que colocam a Inteligência Artificial no centro da 
-              estratégia saem na frente. Por isso, adotamos o conceito AI First: soluções pensadas desde 
-              o início para serem inteligentes, automatizadas e orientadas por dados.
+              O tempo da sua equipe é valioso. Integramos inteligência artificial ao atendimento e aos processos do seu negócio para reduzir tarefas manuais e tornar o dia a dia mais simples.
             </p>
             <p className="text-muted-foreground mt-4 leading-relaxed">
-              Ser AI First é desenvolver produtos, processos e experiências com IA integrada desde a 
-              concepção — não como um "extra", mas como o cérebro por trás do negócio.
+              Tudo começa entendendo sua operação. A partir daí, construímos a solução adequada ao seu momento, com integração, orientação e acompanhamento próximo.
             </p>
           </div>
           <div className="space-y-4">
@@ -41,7 +38,7 @@ export function AIFirstSection() {
               </ul>
             </div>
             <p className="text-sm text-muted-foreground italic px-2">
-              AI First não é sobre o futuro. É sobre agora. E quem começa hoje, lidera amanhã.
+              Mais espaço para criar, atender melhor e fazer seu negócio crescer.
             </p>
           </div>
         </div>

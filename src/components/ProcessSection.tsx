@@ -1,9 +1,9 @@
 import { Search, Rocket, Headphones } from "lucide-react";
 
 const steps = [
-  { num: "01", icon: Search, title: "Análise Inicial", desc: "Identificamos as necessidades do seu negócio." },
-  { num: "02", icon: Rocket, title: "Implementação Rápida", desc: "Configuramos automação, chatbot e site." },
-  { num: "03", icon: Headphones, title: "Suporte Contínuo", desc: "Acompanhamos e ajustamos conforme necessário." },
+  { num: "01", icon: Search, title: "Entendemos sua rotina", desc: "Conversamos sobre o atendimento, as ferramentas e os desafios que você quer resolver." },
+  { num: "02", icon: Rocket, title: "Conectamos os pontos", desc: "Definimos as etapas e configuramos canais, IA e processos de acordo com o projeto." },
+  { num: "03", icon: Headphones, title: "Evoluímos com você", desc: "Orientamos a equipe, acompanhamos o uso e ajustamos a solução à medida que a operação amadurece." },
 ];
 
 export function ProcessSection() {
@@ -11,9 +11,9 @@ export function ProcessSection() {
     <section id="processo" className="py-24 px-4">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-16">
-          <span className="text-primary text-sm font-semibold tracking-widest uppercase">Como Funciona</span>
+          <span className="text-primary text-sm font-semibold tracking-widest uppercase">Como colocamos de pé</span>
           <h2 className="text-3xl md:text-4xl font-bold mt-3 text-foreground">
-            Processo Simples e Eficiente
+            Do seu desafio à solução em uso.
           </h2>
         </div>
         <div className="grid md:grid-cols-3 gap-8">

@@ -14,7 +14,7 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-foreground mb-3">Links Rápidos</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#solucoes" className="text-muted-foreground hover:text-primary transition-colors">Soluções</a></li>
+              <li><a href="#produtos" className="text-muted-foreground hover:text-primary transition-colors">Produtos</a></li>
               <li><a href="#processo" className="text-muted-foreground hover:text-primary transition-colors">Como Funciona</a></li>
               <li><a href="#contato" className="text-muted-foreground hover:text-primary transition-colors">Contato</a></li>
             </ul>
