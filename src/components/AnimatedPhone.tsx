@@ -13,6 +13,7 @@ const messages = [
 export function AnimatedPhone({ title = "Intelligence" }: { title?: string }) {
   const figure = useRef<HTMLElement>(null);
   const chat = useRef<HTMLDivElement>(null);
+  const chatContent = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const [pageVisible, setPageVisible] = useState(true);
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -26,11 +27,20 @@ export function AnimatedPhone({ title = "Intelligence" }: { title?: string }) {
     const updateMotion = () => setReducedMotion(media.matches);
     const updateVisibility = () => setPageVisible(!document.hidden);
     updateMotion(); updateVisibility();
-    media.addEventListener("change", updateMotion);
+    if (typeof media.addEventListener === "function") media.addEventListener("change", updateMotion);
+    else media.addListener(updateMotion);
     document.addEventListener("visibilitychange", updateVisibility);
-    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { threshold: 0.15 });
-    if (figure.current) observer.observe(figure.current);
-    return () => { observer.disconnect(); media.removeEventListener("change", updateMotion); document.removeEventListener("visibilitychange", updateVisibility); };
+    window.addEventListener("pageshow", updateVisibility);
+    const observer = typeof IntersectionObserver === "function" ? new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { rootMargin: "120px 0px", threshold: 0 }) : null;
+    if (observer && chat.current) observer.observe(chat.current);
+    else setVisible(true);
+    return () => {
+      observer?.disconnect();
+      if (typeof media.removeEventListener === "function") media.removeEventListener("change", updateMotion);
+      else media.removeListener(updateMotion);
+      document.removeEventListener("visibilitychange", updateVisibility);
+      window.removeEventListener("pageshow", updateVisibility);
+    };
   }, []);
 
   useEffect(() => {
@@ -48,17 +58,40 @@ export function AnimatedPhone({ title = "Intelligence" }: { title?: string }) {
 
   useEffect(() => {
     const element = chat.current;
-    if (element) element.scrollTo({ top: count === 0 ? 0 : element.scrollHeight, behavior: reducedMotion || count === 0 ? "instant" : "smooth" });
+    const content = chatContent.current;
+    if (!element || !content) return;
+    let measureFrame = 0;
+    let scrollFrame = 0;
+    const followLatestMessage = () => {
+      cancelAnimationFrame(measureFrame);
+      cancelAnimationFrame(scrollFrame);
+      measureFrame = requestAnimationFrame(() => {
+        const target = count === 0 ? 0 : Math.max(0, element.scrollHeight - element.clientHeight);
+        if (count === 0 || reducedMotion) { element.scrollTop = target; return; }
+        const from = element.scrollTop;
+        const start = performance.now();
+        const animate = (now: number) => {
+          const progress = Math.min((now - start) / 260, 1);
+          element.scrollTop = from + (target - from) * (1 - (1 - progress) ** 3);
+          if (progress < 1) scrollFrame = requestAnimationFrame(animate);
+        };
+        scrollFrame = requestAnimationFrame(animate);
+      });
+    };
+    followLatestMessage();
+    const observer = typeof ResizeObserver === "function" ? new ResizeObserver(followLatestMessage) : null;
+    observer?.observe(content);
+    return () => { observer?.disconnect(); cancelAnimationFrame(measureFrame); cancelAnimationFrame(scrollFrame); };
   }, [count, typing, reducedMotion]);
 
   return <figure ref={figure} className="phone-figure phone-figure--3d" data-running={running}>
     <div className="phone-stage"><div className="phone-hover"><div className="phone-pose"><div className="demo-phone">
       <div className="phone-status"><span>9:41</span><span className="phone-status-icons" aria-hidden="true"><Signal size={14} strokeWidth={2.5} /><Wifi size={14} strokeWidth={2.5} /><BatteryFull size={20} strokeWidth={2} /></span></div>
       <div className="phone-contact"><ChevronLeft size={18} aria-hidden="true" /><div className="phone-avatar">i</div><div><strong>{title}</strong><small>{typing ? "IA digitando…" : "Assistente de IA"}</small></div><MoreHorizontal size={18} aria-hidden="true" /></div>
-      <div className="phone-chat" ref={chat} aria-hidden="true"><span className="chat-date">HOJE</span>
+      <div className="phone-chat" ref={chat} aria-hidden="true"><div className="phone-chat-content" ref={chatContent}><span className="chat-date">HOJE</span>
         {messages.slice(0, count).map((message, index) => <div className={`chat-bubble message-arriving ${message.from === "client" ? "from-client" : "from-team"}`} key={index}><p>{message.text}</p><small>{message.time}{message.from === "team" && <Check size={11} />}</small></div>)}
         {typing && <div className="chat-bubble from-team typing-bubble"><span /><span /><span /></div>}
-      </div>
+      </div></div>
       <div className="phone-input" aria-hidden="true"><Plus size={16} /><span>Mensagem</span><Send size={14} /></div><div className="phone-home" aria-hidden="true" />
     </div></div></div></div>
     <ol className="sr-only" aria-label="Exemplo ilustrativo de conversa com IA">{messages.map((message, index) => <li key={index}>{message.from === "team" ? "Assistente de IA" : "Cliente"}: {message.text}</li>)}</ol>
