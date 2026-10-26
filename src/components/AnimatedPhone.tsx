@@ -16,73 +16,72 @@ export function AnimatedPhone({ title = "Intelligence" }: { title?: string }) {
   const chatContent = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const [pageVisible, setPageVisible] = useState(true);
-  const [reducedMotion, setReducedMotion] = useState(false);
   const [paused, setPaused] = useState(false);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const [typing, setTyping] = useState(false);
-  const running = visible && pageVisible && !paused && !reducedMotion;
+  const running = visible && pageVisible && !paused;
 
   useEffect(() => {
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const updateMotion = () => setReducedMotion(media.matches);
-    const updateVisibility = () => setPageVisible(!document.hidden);
-    updateMotion(); updateVisibility();
-    if (typeof media.addEventListener === "function") media.addEventListener("change", updateMotion);
-    else media.addListener(updateMotion);
+    const resetConversation = () => {
+      setCount(1);
+      setTyping(false);
+      if (chat.current) chat.current.scrollTop = 0;
+    };
+    const updateVisibility = () => {
+      setPageVisible(!document.hidden);
+      resetConversation();
+    };
+    updateVisibility();
     document.addEventListener("visibilitychange", updateVisibility);
     window.addEventListener("pageshow", updateVisibility);
-    const observer = typeof IntersectionObserver === "function" ? new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { rootMargin: "120px 0px", threshold: 0 }) : null;
+    let observedVisible = false;
+    const observer = typeof IntersectionObserver === "function" ? new IntersectionObserver(([entry]) => {
+      const nextVisible = entry.isIntersecting && (observedVisible || entry.intersectionRatio >= 0.25);
+      if (nextVisible !== observedVisible) {
+        observedVisible = nextVisible;
+        resetConversation();
+        setVisible(nextVisible);
+      }
+    }, { rootMargin: "0px", threshold: [0, 0.25] }) : null;
     if (observer && chat.current) observer.observe(chat.current);
     else setVisible(true);
     return () => {
       observer?.disconnect();
-      if (typeof media.removeEventListener === "function") media.removeEventListener("change", updateMotion);
-      else media.removeListener(updateMotion);
       document.removeEventListener("visibilitychange", updateVisibility);
       window.removeEventListener("pageshow", updateVisibility);
     };
   }, []);
 
   useEffect(() => {
-    if (reducedMotion) { setCount(messages.length); setTyping(false); return; }
     if (!running) { setTyping(false); return; }
     if (count >= messages.length) {
-      const timer = window.setTimeout(() => setCount(0), 6500);
+      const timer = window.setTimeout(() => {
+        setTyping(false);
+        setCount(1);
+        if (chat.current) chat.current.scrollTop = 0;
+      }, 3500);
       return () => window.clearTimeout(timer);
     }
     const next = messages[count];
     setTyping(next.from === "team");
     const timer = window.setTimeout(() => { setTyping(false); setCount(current => current + 1); }, next.from === "team" ? 2100 : 1400);
     return () => window.clearTimeout(timer);
-  }, [count, running, reducedMotion]);
+  }, [count, running]);
 
   useEffect(() => {
     const element = chat.current;
     const content = chatContent.current;
     if (!element || !content) return;
-    let measureFrame = 0;
-    let scrollFrame = 0;
     const followLatestMessage = () => {
-      cancelAnimationFrame(measureFrame);
-      cancelAnimationFrame(scrollFrame);
-      measureFrame = requestAnimationFrame(() => {
-        const target = count === 0 ? 0 : Math.max(0, element.scrollHeight - element.clientHeight);
-        if (count === 0 || reducedMotion) { element.scrollTop = target; return; }
-        const from = element.scrollTop;
-        const start = performance.now();
-        const animate = (now: number) => {
-          const progress = Math.min((now - start) / 260, 1);
-          element.scrollTop = from + (target - from) * (1 - (1 - progress) ** 3);
-          if (progress < 1) scrollFrame = requestAnimationFrame(animate);
-        };
-        scrollFrame = requestAnimationFrame(animate);
-      });
+      element.scrollTop = count <= 1 ? 0 : Math.max(0, element.scrollHeight - element.clientHeight);
     };
+    // Keep the latest bubble visible even when mobile browsers throttle animation frames.
     followLatestMessage();
+    const frame = requestAnimationFrame(followLatestMessage);
     const observer = typeof ResizeObserver === "function" ? new ResizeObserver(followLatestMessage) : null;
     observer?.observe(content);
-    return () => { observer?.disconnect(); cancelAnimationFrame(measureFrame); cancelAnimationFrame(scrollFrame); };
-  }, [count, typing, reducedMotion]);
+    return () => { observer?.disconnect(); cancelAnimationFrame(frame); };
+  }, [count, typing]);
 
   return <figure ref={figure} className="phone-figure phone-figure--3d" data-running={running}>
     <div className="phone-stage"><div className="phone-hover"><div className="phone-pose"><div className="demo-phone">
@@ -95,6 +94,6 @@ export function AnimatedPhone({ title = "Intelligence" }: { title?: string }) {
       <div className="phone-input" aria-hidden="true"><Plus size={16} /><span>Mensagem</span><Send size={14} /></div><div className="phone-home" aria-hidden="true" />
     </div></div></div></div>
     <ol className="sr-only" aria-label="Exemplo ilustrativo de conversa com IA">{messages.map((message, index) => <li key={index}>{message.from === "team" ? "Assistente de IA" : "Cliente"}: {message.text}</li>)}</ol>
-    <figcaption><span>Conversa ilustrativa · dados fictícios.</span>{!reducedMotion && <button className="phone-motion-control" type="button" onClick={() => setPaused(!paused)} aria-label={paused ? "Retomar demonstração do celular" : "Pausar demonstração do celular"} aria-pressed={paused}>{paused ? <Play size={12} /> : <Pause size={12} />}</button>}</figcaption>
+    <figcaption><span>Conversa ilustrativa · dados fictícios.</span><button className="phone-motion-control" type="button" onClick={() => setPaused(!paused)} aria-label={paused ? "Retomar demonstração do celular" : "Pausar demonstração do celular"} aria-pressed={paused}>{paused ? <Play size={12} /> : <Pause size={12} />}</button></figcaption>
   </figure>;
 }
